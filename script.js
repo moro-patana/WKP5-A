@@ -54,6 +54,7 @@ const recipes = [
 const postList = document.querySelector(`#post-list`);
 const heading = document.querySelector(`h1`);
 const generateButton = document.querySelector('button.generate');
+const cardElement = document.querySelector(`.card`);
 
 const renderCard = () => {
 	// check the recipes collection
@@ -85,12 +86,32 @@ for (let i = 0; i < recipes.length; i++) {
 `;
 postList.insertAdjacentHTML(`afterend`, myHTML);
 
-const handleBtn = event => {
-	const InfoHTML = `
-	<h1>${recipes[i].title} <small>${recipes[i].author}</small></h1>`;
 }
+}
+const moreInfo = () => {
+	const {title, picture, author, difficulty, timing, ingredients, steps} = cardElement.dataset;
+	order.querySelector(`.title`).textContent;
+	const InfoHTML = `
+		<h1>${recipes[i].title} <small>${recipes[i].author}</small></h1>
+			<img src="${recipes[i].picture}"/>
+			<ul>
+				<li>Difficulty: ${recipes[i].difficulty}</li>
+				<li>Timing: ${recipes[i].timing}</li>
+				<li>Steps: ${recipes[i].steps}</li>
+				<li>Ingredients list: ${recipes[i].ingredients}</li>
+			</ul>`
 
-}	  
+	innerModal.innerHTML = infoHTML;
+	outerModal.classList.add(`open`);
+  }
+  const handleBtnClick = event => {
+	if (event.target.matches(`button.info`)) {
+		const card = event.target.closest(`.card`)
+		moreInfo(card);
+	}
+  };	  
 
-	// put it in the DOM
+// put it in the DOM
+// Listeners
+window.addEventListener(`click`, handleBtnClick);
 generateButton.addEventListener('click', renderCard);
