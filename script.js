@@ -123,6 +123,22 @@ const moreInfo = () => {
 	innerModal.innerHTML = moreInfoHTML;
 	outerModal.classList.add(`open`);
   }
+
+  const handleCloseModal = event => {
+    const isOutside = !event.target.closest(`.inner-modal`);
+    if (isOutside) {
+        outerModal.classList.remove(`open`);
+    }
+};
+
+const handleEscapeKey = event => {
+    if (event.key === `Escape`) {
+        closeModal();
+    }
+};
+const closeModal = event => {
+    outerModal.classList.remove(`open`);
+}
   const handleBtnClick = event => {
 	if (event.target.matches(`button.info`)) {
 		const card = event.target.closest(`.card`);
@@ -137,9 +153,8 @@ const moreInfo = () => {
 
   // Listeners
   window.addEventListener(`click`, handleBtnClick);
-//   window.addEventListener(`submit`, handleSubmit);
-//   window.addEventListener(`keydown`, handleEscapeKey);
-//   outerModal.addEventListener(`click`, handleCloseModal);
+  window.addEventListener(`keydown`, handleEscapeKey);
+  outerModal.addEventListener(`click`, handleCloseModal);
 //   addOrderBtn.addEventListener(`click`, addOrder);
 
 generateButton.addEventListener('click', renderCard);
