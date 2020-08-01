@@ -50,68 +50,96 @@ const recipes = [
 		id: 1596168522409,
 	},
 ];
-
+const container = document.querySelector(`.container`)
 const postList = document.querySelector(`#post-list`);
 const heading = document.querySelector(`h1`);
 const generateButton = document.querySelector('button.generate');
 const cardElement = document.querySelector(`.card`);
+const addNewRecipe = document.querySelector(`.add-recipe`);
+const infoBtn = document.querySelector(`info`);
+const outerModal = document.querySelector(`.outer-modal`);
+const innerModal = document.querySelector(`.inner-modal`);
+
 
 const renderCard = () => {
-	// check the recipes collection
-	function getArrayOfRecipes(obj) {
-		return Object.keys(recipes);
-	}
-	console.log(getArrayOfRecipes(recipes));
+// 	// check the recipes collection
+// 	function getArrayOfRecipes(obj) {
+// 		return Object.keys(recipes);
+// 	}
+// 	console.log(getArrayOfRecipes(recipes));
 
-recipes.forEach(function(element) {
-	console.log(element);
-});
+// recipes.forEach(function(element) {
+// 	console.log(element);
+// });
 	// generate the HTML
 for (let i = 0; i < recipes.length; i++) {
 	const myHTML = `
-	    <div class="card">
-			<div class="card-body">
+	    <article class="card">
 				<h2 class="card-title">${recipes[i].title}</h2>
 				<img src="${recipes[i].picture}">
-				<p>
-				Timing: ${recipes[i].timing}
-				  <br>
-				  Difficulty: ${recipes[i].difficulty}
-				</p>
+				<nav>
+				  <ul>
+					<li>Timing: ${recipes[i].timing}</li>
+					<li>Difficulty: ${recipes[i].difficulty}</li>
+				  </ul>
+				</nav>
 				<button type="button" class="info">
 				More info
 				</button>
-			</div>
-	    </div>
+		</article>
 `;
-postList.insertAdjacentHTML(`afterend`, myHTML);
+container.insertAdjacentHTML("beforeend", myHTML);
 
 }
 }
+
 const moreInfo = () => {
-	const {title, picture, author, difficulty, timing, ingredients, steps} = cardElement.dataset;
-	order.querySelector(`.title`).textContent;
-	const InfoHTML = `
-		<h1>${recipes[i].title} <small>${recipes[i].author}</small></h1>
-			<img src="${recipes[i].picture}"/>
+	// const {title, picture, author, difficulty, ingredients, steps} = cardElement;
+	// cardElement.querySelector(`.card`).textContent;
+	const moreInfoHTML = `
+	<h4>${recipes.title} by</h4>
+	  <img src="">
+	  <nav>
+	  <ul>
+		<li>Timing: </li>
+		<li>Difficulty: </li>
+		<li>Ingredients:
 			<ul>
-				<li>Difficulty: ${recipes[i].difficulty}</li>
-				<li>Timing: ${recipes[i].timing}</li>
-				<li>Steps: ${recipes[i].steps}</li>
-				<li>Ingredients list: ${recipes[i].ingredients}</li>
-			</ul>`
-
-	innerModal.innerHTML = infoHTML;
+				<li>
+				
+				</li>
+			</ul>
+		</li>
+		<li>
+			<ul>
+				<li>
+				
+				</li>
+			</ul>
+		</li>
+	  </ul>
+	  </nav>
+	`; 
+	innerModal.innerHTML = moreInfoHTML;
 	outerModal.classList.add(`open`);
   }
   const handleBtnClick = event => {
 	if (event.target.matches(`button.info`)) {
-		const card = event.target.closest(`.card`)
-		moreInfo(card);
+		const card = event.target.closest(`.card`);
+		const id = Number(card.dataset.id);
+		const recipe = recipes.find(singleRecipe => singleRecipe.id === id);
+		moreInfo(recipe);
 	}
-  };	  
+  };
 
-// put it in the DOM
-// Listeners
-window.addEventListener(`click`, handleBtnClick);
+
+
+
+  // Listeners
+  window.addEventListener(`click`, handleBtnClick);
+//   window.addEventListener(`submit`, handleSubmit);
+//   window.addEventListener(`keydown`, handleEscapeKey);
+//   outerModal.addEventListener(`click`, handleCloseModal);
+//   addOrderBtn.addEventListener(`click`, addOrder);
+
 generateButton.addEventListener('click', renderCard);
